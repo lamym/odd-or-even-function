@@ -14,7 +14,11 @@ node {
             def RESOURCE_GROUP = 'ymlCxLinux' 
             def FUNC_NAME = 'repro8234'
             // login Azure
-            withCredentials([azureServicePrincipal('azuresp2')]) {
+            withCredentials([azureServicePrincipal(credentialsId: 'azuresp2',
+                                    subscriptionIdVariable: 'AZURE_CLIENT_ID',
+                                    clientIdVariable: 'AZURE_CLIENT_ID',
+                                    clientSecretVariable: 'AZURE_CLIENT_SECRET',
+                                    tenantIdVariable: 'TAZURE_TENANT_ID')]){
             sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
          }   
          sh 'cd $PWD/target/azure-functions/odd-or-even-function-sample && zip -r ../../../archive.zip ./* && cd -'
