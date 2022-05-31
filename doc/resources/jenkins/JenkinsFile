@@ -1,6 +1,6 @@
 node {
     withEnv(['AZURE_SUBSCRIPTION_ID=99999999-9999-9999-9999-999999999999',
-            'AZURE_TENANT_ID=99999999-9999-9999-9999-999999999999']) {
+            'AZURE_TENANT_ID=a72cec63-24f7-452f-88cf-241c9a58394f']) {
         stage('Init') {
             cleanWs()
             checkout scm
