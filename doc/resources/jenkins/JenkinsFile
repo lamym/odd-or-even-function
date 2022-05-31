@@ -15,7 +15,7 @@ node {
             def FUNC_NAME = 'repro8234'
             // login Azure
             withCredentials([azureServicePrincipal(credentialsId: 'azuresp2',
-                                    subscriptionIdVariable: 'AZURE_CLIENT_ID',
+                                    subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
                                     clientIdVariable: 'AZURE_CLIENT_ID',
                                     clientSecretVariable: 'AZURE_CLIENT_SECRET',
                                     tenantIdVariable: 'TAZURE_TENANT_ID')]){
