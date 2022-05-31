@@ -1,5 +1,5 @@
 node {
-    withEnv(['AZURE_SUBSCRIPTION_ID=99999999-9999-9999-9999-999999999999',
+    withEnv(['AZURE_SUBSCRIPTION_ID=3f1d8a91-940f-4c9d-b8d7-b146893bbd27',
             'AZURE_TENANT_ID=72f988bf-86f1-41af-91ab-2d7cd011db47']) {
         stage('Init') {
             cleanWs()
