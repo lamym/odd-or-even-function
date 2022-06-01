@@ -14,16 +14,15 @@ node {
             def RESOURCE_GROUP = 'ymlCxLinux' 
             def FUNC_NAME = 'repro8234'
             // login Azure
-            withCredentials([azureServicePrincipal(credentialsId: 'azuresp2',
-                                    subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
-                                    clientIdVariable: 'AZURE_CLIENT_ID',
-                                    clientSecretVariable: 'AZURE_CLIENT_SECRET',
-                                    tenantIdVariable: 'TAZURE_TENANT_ID')]){
-            sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
-         }   
-         sh 'cd $PWD/target/azure-functions/odd-or-even-function-sample && zip -r ../../../archive.zip ./* && cd -'
-         sh "az functionapp deployment source config-zip -g $RESOURCE_GROUP -n $FUNC_NAME --src archive.zip"
-         sh 'az logout'
-       }
+            withCredentials([usernamePassword(credentialsId: 'azuresp', passwordVariable: 'AZURE_CLIENT_SECRET', usernameVariable: 'AZURE_CLIENT_ID')]) {
+            sh '''
+                az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID
+                az account set -s $AZURE_SUBSCRIPTION_ID
+            '''
+            }
+            sh 'cd $PWD/target/azure-functions/odd-or-even-function-sample && zip -r ../../../archive.zip ./* && cd -'
+            sh "az functionapp deployment source config-zip -g $RESOURCE_GROUP -n $FUNC_NAME --src archive.zip"
+            sh 'az logout'
+        }
     }
 }
